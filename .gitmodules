@@ -1,0 +1,3 @@
+[submodule "k8e-dirty"]
+	path = k8e-dirty
+	url = https://github.com/k8e811/k8e-dirty.git
