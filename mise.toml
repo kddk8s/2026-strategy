@@ -1,0 +1,5 @@
+[tools]
+awscli = "2.32.4"
+github-cli = "2.83.1"
+shellcheck = "0.11.0"
+sqlite = "3.46.1"
