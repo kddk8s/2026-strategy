@@ -1,3 +1,6 @@
 [submodule "k8e-dirty"]
 	path = k8e-dirty
 	url = https://github.com/k8e811/k8e-dirty.git
+[submodule "analytics"]
+	path = analytics
+	url = https://github.com/kddk8s/analytics.git
