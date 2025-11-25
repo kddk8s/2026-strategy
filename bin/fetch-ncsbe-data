@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e
+set -u
+set -o pipefail
+set -x
+Main() {
+    local bucket='dl.ncsbe.gov'
+    local cmd=(aws s3 sync --no-sign-request --delete --exact-timestamps 
+    "s3://$bucket" 
+    "buckets/$bucket" 
+    --exclude='**' 
+    --include='data/*Statewide*.zip'
+    --include='Elections/2026/**'
+    --include='data/**.pdf'
+    --exclude='data/SampleBallots/**'
+    --include='data/**.txt'
+    --exclude='data/legislative_districts/**'
+    )
+    local arg
+    for arg in "$@"; do
+        case "$arg" in
+        --history)  cmd+=(--include='data/Snapshots/**.zip') ;;
+        --precinct) cmd+=(--include='data/vipFeed/**.zip') ;;
+        --allfilings) cmd+=(--include='Elections/**') ;;
+        --dryrun) cmd+=(--dryrun) ;;
+        esac
+    done
+    # cmd+=(--exclude='**.mp4')
+    "${cmd[@]}"
+
+    exit 0
+}
+# shellcheck disable=SC2317 # Typical pattern to make safe on NFS
+Main "$@" && exit 1
