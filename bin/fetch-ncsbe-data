@@ -3,11 +3,13 @@ set -e
 set -u
 set -o pipefail
 set -x
+zero=$(readlink -f "$0")
+zerodir="${zero%/*}"
 Main() {
     local bucket='dl.ncsbe.gov'
     local cmd=(aws s3 sync --no-sign-request --delete --exact-timestamps 
     "s3://$bucket" 
-    "buckets/$bucket" 
+    "$zerodir/../buckets/$bucket" 
     --exclude='**' 
     --include='data/*Statewide*.zip'
     --include='Elections/2026/**'
