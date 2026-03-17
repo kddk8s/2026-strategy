@@ -58,6 +58,16 @@ UNION SELECT * FROM l_vrsnapshot20260303
 ) NATURAL JOIN (
 SELECT DISTINCT county_desc, precinct_desc, vtd_desc FROM nc_sen_precincts
 );
+CREATE TABLE IF NOT EXISTS nc_sen_precincts_sen_dist AS SELECT DISTINCT
+  snapshot_dt
+, nc_senate_abbrv
+, county_desc
+, precinct_desc
+, vtd_desc FROM nc_sen_voters;
+CREATE TABLE IF NOT EXISTS nc_sen_interesting AS SELECT snapshot_dt, county_desc, precinct_desc, vtd_desc, c FROM (
+  SELECT snapshot_dt, county_desc, precinct_desc, vtd_desc, count(1) as c FROM nc_sen_precincts_sen_dist GROUP BY snapshot_dt, county_desc, precinct_desc, vtd_desc
+) WHERE c > 1;
+SELECT * from nc_sen_interesting;
 EEOOTT
 }
 PrecinctExternal() {
