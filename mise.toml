@@ -1,2 +1,5 @@
 [tools]
-aws = "latest"
+aws = { version = "latest", symlink_bins = "true" }
+github-cli = "latest"
+sqlite = "latest"
+shellcheck = "latest"
