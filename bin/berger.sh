@@ -13,7 +13,10 @@ root="${zerodir%/*}"
 #   * Whether there was a primary in 2024
 #     * No
 #   * Which voters (especially GOP leaning) were pulled from NC Senate district 26
+#     * Have the voters... don't have the deltas
 #   * Which precincts for NC Senate district 26 has multiple senate seats
+#     2026-03-03|GUILFORD|NCGR2|NCGR2|2
+#     2026-03-03|GUILFORD|SF2|SF2|2
 #   * Which voters for NC Senate district 26 voted this primary
 #
 #
@@ -68,6 +71,8 @@ CREATE TABLE IF NOT EXISTS nc_sen_interesting AS SELECT snapshot_dt, county_desc
   SELECT snapshot_dt, county_desc, precinct_desc, vtd_desc, count(1) as c FROM nc_sen_precincts_sen_dist GROUP BY snapshot_dt, county_desc, precinct_desc, vtd_desc
 ) WHERE c > 1;
 SELECT * from nc_sen_interesting;
+CREATE TABLE IF NOT EXISTS nc_sen_voted AS SELECT
+nc_sen_voters.*, voted_party_cd FROM nc_sen_voters NATURAL JOIN ncvhis ;
 EEOOTT
 }
 PrecinctExternal() {
@@ -77,6 +82,7 @@ ATTACH DATABASE '$root/analytics/load/snapshots/VR_Snapshot_20251007.sqlite3' AS
 ATTACH DATABASE '$root/analytics/load/snapshots/VR_Snapshot_20251104.sqlite3' AS s20251104;
 ATTACH DATABASE '$root/analytics/load/snapshots/VR_Snapshot_20260101.sqlite3' AS s20260101;
 ATTACH DATABASE '$root/analytics/load/snapshots/VR_Snapshot_20260303.sqlite3' AS s20260303;
+ATTACH DATABASE '$root/analytics/load/ncv/ncvhis_Statewide.sqlite3' AS ncvhis;
 .schema
 EEOOTT
 }
