@@ -24,6 +24,7 @@ Main() {
         --history)  cmd+=(--include='data/Snapshots/**.zip') ;;
         --precinct) cmd+=(--include='data/vipFeed/**.zip') ;;
         --allfilings) cmd+=(--include='Elections/**') ;;
+	--enrs) cmd+=(--include='ENRS/**') ;;
         --dryrun) cmd+=(--dryrun) ;;
         esac
     done
